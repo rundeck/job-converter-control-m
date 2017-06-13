@@ -1,0 +1,167 @@
+<!DOCTYPE DEFTABLE SYSTEM "deftable.dtd">
+<DEFTABLE>
+    <TABLE DATACENTER="PROD" TABLE_NAME="PRODJ-AU" TABLE_USERDAILY="SYSTEM" USED_BY_CODE="0">
+        <JOB
+
+                APPLICATION="ftp"
+
+                APR="1"
+
+                AUG="0"
+
+                AUTHOR="peter.pan"
+
+                AUTOARCH="0"
+
+                CHANGE_DATE="20150313"
+
+                CHANGE_TIME="165112"
+
+                CHANGE_USERID="peter.pan"
+
+                CMDLINE="powershell d:\wrapper.ps1 -ConfigPath %%configpath -Environment PRODJ -Country NA -ScriptFile D:\ftp.ps1"
+
+                CONFIRM="0"
+
+                CREATION_DATE="20141219"
+
+                CREATION_TIME="134531"
+
+                CREATION_USER="tmurray"
+
+                CRITICAL="0"
+
+                CYCLIC="0"
+
+                CYCLIC_TYPE="Interval"
+
+                DAYS="L1,L2,L3,L4,L5,L6,L7"
+
+                DAYS_AND_OR="AND"
+
+                DEC="0"
+
+                DESCRIPTION="Lifetime Feed Interface - Transfer File"
+
+                FEB="0"
+
+                GROUP="ftp"
+
+                INTERVAL="00001M"
+
+                JAN="1"
+
+                JOBNAME="ftp"
+
+                JUL="1"
+
+                JUN="0"
+
+                MAR="0"
+
+                MAXDAYS="0"
+
+                MAXRERUN="0"
+
+                MAXRUNS="0"
+
+                MAXWAIT="0"
+
+                MAY="0"
+
+                MEMNAME="PRODJ-NA-ftp"
+
+                MULTY_AGENT="N"
+
+                NODEID="NYAPCTRLMA02"
+
+                NOV="0"
+
+                OCT="1"
+
+                OWNER="PRODUCTION\ftp"
+
+                PARENT_TABLE="PRODJ-NA"
+
+                RETRO="0"
+
+                RULE_BASED_CALENDAR_RELATIONSHIP="OR"
+
+                SEP="0"
+
+                SHIFT="IGNOREJOB"
+
+                SHIFTNUM="+00"
+
+                SYSDB="0"
+
+                TASKTYPE="Command"
+
+                TIMEFROM="0100"
+
+                TIMETO=">"
+
+                USE_INSTREAM_JCL="N"
+
+                WEEKDAYS="4">
+
+            <QUANTITATIVE NAME="ALL" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-NA" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-NA-ftp" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-boss" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-NA-boss" QUANT="1"/>
+
+            <OUTCOND NAME="PRODJ-NA-ftp" ODATE="ODAT" SIGN="ADD"/>
+
+            <AUTOEDIT2 NAME="%%job_countries" VALUE="NA"/>
+
+            <AUTOEDIT2 NAME="%%job_role" VALUE="primary"/>
+
+            <AUTOEDIT2 NAME="%%job_type" VALUE="powershell"/>
+
+            <AUTOEDIT2 NAME="%%job_confirm" VALUE="1"/>
+
+            <AUTOEDIT2 NAME="%%job_timeoffset" VALUE="1"/>
+
+            <AUTOEDIT2 NAME="%%job_version" VALUE="15.2.0.1"/>
+
+            <SHOUT
+
+                    DEST="ECS"
+
+                    MESSAGE="%%JOBNAME is running longer than 3 hours"
+
+                    TIME=">180"
+
+                    URGENCY="R"
+
+                    WHEN="EXECTIME"/>
+
+            <ON CODE="NOTOK" STMT="*">
+
+                <DOMAIL
+
+                        ATTACH_SYSOUT="Yes"
+
+                        CC_DEST="peter@pan.com"
+
+                        DEST="peter@pan.com"
+
+                        MESSAGE="00000032CTRLM7 Environment: %%DATACENTER0029Name of Application: %%APPLIC0021Job Table: %%SCHEDTAB0022Job Group: %%APPLGROUP0019Job Name: %%JOBNAME0026Job Agent Server: %%NODEID00000033Error level returned: %%COMPSTAT.00000028CONTROL-M Log File attached."
+
+                        SUBJECT="Control-M Job %%SCHEDTAB-%%APPLGROUP-%%JOBNAME Failed with exit code %%COMPSTAT"
+
+                        URGENCY="R"/>
+
+            </ON>
+
+        </JOB>
+    </TABLE>
+</DEFTABLE>
+

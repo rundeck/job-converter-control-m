@@ -1,0 +1,175 @@
+<!DOCTYPE DEFTABLE SYSTEM "deftable.dtd">
+<DEFTABLE>
+
+    <TABLE DATACENTER="PROD" TABLE_NAME="PRODJ-AU" TABLE_USERDAILY="SYSTEM" USED_BY_CODE="0">
+        <JOB
+
+                APPLICATION="reports_ctrlm"
+
+                APR="1"
+
+                AUG="1"
+
+                AUTHOR="Peter.Pan"
+
+                AUTOARCH="0"
+
+                CHANGE_DATE="20160428"
+
+                CHANGE_TIME="170546"
+
+                CHANGE_USERID="prodCntrlM_Deploy"
+
+                CMDLINE="powershell d:\OracleSqlWrapper.ps1 -ConfigPath %%configpath -Environment PRODJ -Country US -SqlFile D:\ExporteCommerceEpsilon.sql -ConnectionStringProperty ConnectionStrings.Reports.ODS"
+
+                CONFIRM="0"
+
+                CREATION_DATE="20150210"
+
+                CREATION_TIME="160237"
+
+                CREATION_USER="prodCntrlM_Deploy"
+
+                CRITICAL="0"
+
+                CYCLIC="1"
+
+                CYCLIC_TOLERANCE="10"
+
+                CYCLIC_TYPE="Interval"
+
+
+                DEC="1"
+
+                FEB="1"
+
+                GROUP="reports_ctrlm"
+
+                IND_CYCLIC="START"
+
+                INTERVAL="00020M"
+
+                JAN="1"
+
+                JOBNAME="ExporteCommerceEpsilon"
+
+                JUL="1"
+
+                JUN="1"
+
+                MAR="1"
+
+                MAXDAYS="0"
+
+                MAXRERUN="20"
+
+                MAXRUNS="0"
+
+                MAXWAIT="0"
+
+                MAY="1"
+
+                MEMNAME="PRODJ-US-ctrlm"
+
+                MULTY_AGENT="N"
+
+                NODEID="NYAPCTRLMA02"
+
+                NOV="1"
+
+                OCT="1"
+
+                OWNER="PRODUCTION\ctrlm"
+
+                PARENT_TABLE="PRODJ-US"
+
+                RETRO="0"
+
+                RULE_BASED_CALENDAR_RELATIONSHIP="OR"
+
+                SEP="1"
+
+                SHIFT="IGNOREJOB"
+
+                SHIFTNUM="+00"
+
+                SYSDB="0"
+
+                TASKTYPE="Command"
+
+                TIMEFROM="1000"
+
+                TIMETO=">"
+
+                USE_INSTREAM_JCL="N"
+
+                DAYS="L1,L2,L3,L4,L5,L6,L7"
+                DAYS_AND_OR="AND"
+                WEEKDAYS="1">
+
+            <QUANTITATIVE NAME="ALL" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-US" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-US-reports_ctrlm" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-US-reports_ftp" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-reports" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-US-reports" QUANT="1"/>
+
+            <AUTOEDIT2 NAME="%%job_countries" VALUE="US"/>
+
+            <AUTOEDIT2 NAME="%%job_role" VALUE="primary"/>
+
+            <AUTOEDIT2 NAME="%%job_type" VALUE="oraclesql"/>
+
+            <AUTOEDIT2 NAME="%%job_confirm" VALUE="1"/>
+
+            <AUTOEDIT2 NAME="%%job_timeoffset" VALUE="0"/>
+
+            <AUTOEDIT2 NAME="%%job_version" VALUE="16.4.1.39"/>
+
+            <ON CODE="RUNCOUNT&lt;20">
+
+                <DO ACTION="OK"/>
+
+            </ON>
+
+            <ON CODE="*procedure*successfully*completed*">
+
+                <DO ACTION="SPCYC"/>
+
+            </ON>
+
+            <ON CODE="*procedure*successfully*completed*">
+
+                <DOCOND NAME="PRODJ-US-reports_ftp" SIGN="ADD"/>
+
+            </ON>
+
+            <ON CODE="NOTOK" STMT="*">
+
+                <DOMAIL
+
+                        ATTACH_SYSOUT="Yes"
+
+                        CC_DEST="peter@pan.com"
+
+                        DEST="peter@pan.com"
+
+                        MESSAGE="00000032CTRLM7 Environment: %%DATACENTER0029Name of Application: %%APPLIC0021Job Table: %%SCHEDTAB0022Job Group: %%APPLGROUP0019Job Name: %%JOBNAME0026Job Agent Server: %%NODEID00000033Error level returned: %%COMPSTAT.00000028CONTROL-M Log File attached."
+
+                        SUBJECT="Control-M Job %%SCHEDTAB-%%APPLGROUP-%%JOBNAME Failed with exit code %%COMPSTAT"
+
+                        URGENCY="R"/>
+
+            </ON>
+
+        </JOB>
+    </TABLE>
+</DEFTABLE>
+
