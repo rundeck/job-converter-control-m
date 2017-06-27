@@ -1,0 +1,805 @@
+<!DOCTYPE DEFTABLE SYSTEM "deftable.dtd">
+<DEFTABLE>
+    <!-- SIMPLE JOB TO TEST  -->
+    <TABLE DATACENTER="PROD" TABLE_NAME="PRODJ-AU" TABLE_USERDAILY="SYSTEM" USED_BY_CODE="0">
+        <JOB
+
+                APPLICATION="reports_ctrlm"
+
+                APR="1"
+
+                AUG="1"
+
+                AUTHOR="Peter.Pan"
+
+                AUTOARCH="0"
+
+                CHANGE_DATE="20160428"
+
+                CHANGE_TIME="170546"
+
+                CHANGE_USERID="prodCntrlM_Deploy"
+
+                CMDLINE="powershell d:\OracleSqlWrapper.ps1 -ConfigPath %%configpath -Environment PRODJ -Country US -SqlFile D:\ExporteCommerceEpsilon.sql -ConnectionStringProperty ConnectionStrings.Reports.ODS"
+
+                CONFIRM="0"
+
+                CREATION_DATE="20150210"
+
+                CREATION_TIME="160237"
+
+                CREATION_USER="prodCntrlM_Deploy"
+
+                CRITICAL="0"
+
+                CYCLIC="1"
+
+                CYCLIC_TOLERANCE="10"
+
+                CYCLIC_TYPE="Interval"
+
+
+                DEC="1"
+
+                FEB="1"
+
+                GROUP="reports_ctrlm"
+
+                IND_CYCLIC="START"
+
+                INTERVAL="00020M"
+
+                JAN="1"
+
+                JOBNAME="commandLastMonday"
+
+                JUL="1"
+
+                JUN="1"
+
+                MAR="1"
+
+                MAXDAYS="0"
+
+                MAXRERUN="20"
+
+                MAXRUNS="0"
+
+                MAXWAIT="0"
+
+                MAY="1"
+
+                MEMNAME="PRODJ-US-ctrlm"
+
+                MULTY_AGENT="N"
+
+                NODEID="NYAPCTRLMA02"
+
+                NOV="1"
+
+                OCT="1"
+
+                OWNER="PRODUCTION\ctrlm"
+
+                PARENT_TABLE="PRODJ-US"
+
+                RETRO="0"
+
+                RULE_BASED_CALENDAR_RELATIONSHIP="OR"
+
+                SEP="1"
+
+                SHIFT="IGNOREJOB"
+
+                SHIFTNUM="+00"
+
+                SYSDB="0"
+
+                TASKTYPE="Command"
+
+                TIMEFROM="1000"
+
+                TIMETO=">"
+
+                USE_INSTREAM_JCL="N"
+
+                DAYS="L1,L2,L3,L4,L5,L6,L7"
+                DAYS_AND_OR="AND"
+                WEEKDAYS="1">
+
+            <QUANTITATIVE NAME="ALL" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-US" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-US-reports_ctrlm" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-US-reports_ftp" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-reports" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-US-reports" QUANT="1"/>
+
+            <AUTOEDIT2 NAME="%%job_countries" VALUE="US"/>
+
+            <AUTOEDIT2 NAME="%%job_role" VALUE="primary"/>
+
+            <AUTOEDIT2 NAME="%%job_type" VALUE="oraclesql"/>
+
+            <AUTOEDIT2 NAME="%%job_confirm" VALUE="1"/>
+
+            <AUTOEDIT2 NAME="%%job_timeoffset" VALUE="0"/>
+
+            <AUTOEDIT2 NAME="%%job_version" VALUE="16.4.1.39"/>
+
+            <ON CODE="RUNCOUNT&lt;20">
+
+                <DO ACTION="OK"/>
+
+            </ON>
+
+            <ON CODE="*procedure*successfully*completed*">
+
+                <DO ACTION="SPCYC"/>
+
+            </ON>
+
+            <ON CODE="*procedure*successfully*completed*">
+
+                <DOCOND NAME="PRODJ-US-reports_ftp" SIGN="ADD"/>
+
+            </ON>
+
+            <ON CODE="NOTOK" STMT="*">
+
+                <DOMAIL
+
+                        ATTACH_SYSOUT="Yes"
+
+                        CC_DEST="peter@pan.com"
+
+                        DEST="peter@pan.com"
+
+                        MESSAGE="00000032CTRLM7 Environment: %%DATACENTER0029Name of Application: %%APPLIC0021Job Table: %%SCHEDTAB0022Job Group: %%APPLGROUP0019Job Name: %%JOBNAME0026Job Agent Server: %%NODEID00000033Error level returned: %%COMPSTAT.00000028CONTROL-M Log File attached."
+
+                        SUBJECT="Control-M Job %%SCHEDTAB-%%APPLGROUP-%%JOBNAME Failed with exit code %%COMPSTAT"
+
+                        URGENCY="R"/>
+
+            </ON>
+
+        </JOB>
+        <JOB
+
+                APPLICATION="ftp"
+
+                APR="1"
+
+                AUG="0"
+
+                AUTHOR="peter.pan"
+
+                AUTOARCH="0"
+
+                CHANGE_DATE="20150313"
+
+                CHANGE_TIME="165112"
+
+                CHANGE_USERID="peter.pan"
+
+                CMDLINE="powershell d:\wrapper.ps1 -ConfigPath %%configpath -Environment PRODJ -Country NA -ScriptFile D:\ftp.ps1"
+
+                CONFIRM="0"
+
+                CREATION_DATE="20141219"
+
+                CREATION_TIME="134531"
+
+                CREATION_USER="tmurray"
+
+                CRITICAL="0"
+
+                CYCLIC="0"
+
+                CYCLIC_TYPE="Interval"
+
+                DAYS="L1,L2,L3,L4,L5,L6,L7"
+
+                DAYS_AND_OR="AND"
+
+                DEC="0"
+
+                DESCRIPTION="Lifetime Feed Interface - Transfer File"
+
+                FEB="0"
+
+                GROUP="ftp"
+
+                INTERVAL="00001M"
+
+                JAN="1"
+
+                JOBNAME="commandLastThursday"
+
+                JUL="1"
+
+                JUN="0"
+
+                MAR="0"
+
+                MAXDAYS="0"
+
+                MAXRERUN="0"
+
+                MAXRUNS="0"
+
+                MAXWAIT="0"
+
+                MAY="0"
+
+                MEMNAME="PRODJ-NA-ftp"
+
+                MULTY_AGENT="N"
+
+                NODEID="NYAPCTRLMA02"
+
+                NOV="0"
+
+                OCT="1"
+
+                OWNER="PRODUCTION\ftp"
+
+                PARENT_TABLE="PRODJ-NA"
+
+                RETRO="0"
+
+                RULE_BASED_CALENDAR_RELATIONSHIP="OR"
+
+                SEP="0"
+
+                SHIFT="IGNOREJOB"
+
+                SHIFTNUM="+00"
+
+                SYSDB="0"
+
+                TASKTYPE="Command"
+
+                TIMEFROM="0100"
+
+                TIMETO=">"
+
+                USE_INSTREAM_JCL="N"
+
+                WEEKDAYS="4">
+
+            <QUANTITATIVE NAME="ALL" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-NA" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-NA-ftp" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-boss" QUANT="1"/>
+
+            <QUANTITATIVE NAME="PRODJ-NA-boss" QUANT="1"/>
+
+            <OUTCOND NAME="PRODJ-NA-ftp" ODATE="ODAT" SIGN="ADD"/>
+
+            <AUTOEDIT2 NAME="%%job_countries" VALUE="NA"/>
+
+            <AUTOEDIT2 NAME="%%job_role" VALUE="primary"/>
+
+            <AUTOEDIT2 NAME="%%job_type" VALUE="powershell"/>
+
+            <AUTOEDIT2 NAME="%%job_confirm" VALUE="1"/>
+
+            <AUTOEDIT2 NAME="%%job_timeoffset" VALUE="1"/>
+
+            <AUTOEDIT2 NAME="%%job_version" VALUE="15.2.0.1"/>
+
+            <SHOUT
+
+                    DEST="ECS"
+
+                    MESSAGE="%%JOBNAME is running longer than 3 hours"
+
+                    TIME=">180"
+
+                    URGENCY="R"
+
+                    WHEN="EXECTIME"/>
+
+            <ON CODE="NOTOK" STMT="*">
+
+                <DOMAIL
+
+                        ATTACH_SYSOUT="Yes"
+
+                        CC_DEST="peter@pan.com"
+
+                        DEST="peter@pan.com"
+
+                        MESSAGE="00000032CTRLM7 Environment: %%DATACENTER0029Name of Application: %%APPLIC0021Job Table: %%SCHEDTAB0022Job Group: %%APPLGROUP0019Job Name: %%JOBNAME0026Job Agent Server: %%NODEID00000033Error level returned: %%COMPSTAT.00000028CONTROL-M Log File attached."
+
+                        SUBJECT="Control-M Job %%SCHEDTAB-%%APPLGROUP-%%JOBNAME Failed with exit code %%COMPSTAT"
+
+                        URGENCY="R"/>
+
+            </ON>
+
+        </JOB>
+        <!-- File Transfer -->
+        <JOB
+               APPLICATION="BackOffice"
+               APPL_FORM="AFT"
+               APPL_TYPE="FILE_TRANS"
+               APPL_VER="6.1.01"
+               APR="1"
+               AUG="1"
+               AUTHOR="cscalise"
+               AUTOARCH="0"
+               CHANGE_DATE="20160509"
+               CHANGE_TIME="050414"
+               CHANGE_USERID="peter.pan"
+               CM_VER="610"
+               CONFIRM="0"
+               CREATION_DATE="20150311"
+               CREATION_TIME="143608"
+               CREATION_USER="kchan"
+               CRITICAL="0"
+               CYCLIC="0"
+               DAYS_AND_OR="OR"
+               DEC="1"
+               FEB="1"
+               GROUP="Paypal"
+               IND_CYCLIC="START"
+               INTERVAL="00000M"
+               JAN="1"
+               JOBNAME="fileTransfer"
+               JUL="1"
+               JUN="1"
+               MAR="1"
+               MAXDAYS="0"
+               MAXRERUN="0"
+               MAXRUNS="0"
+               MAXWAIT="7"
+               MAY="1"
+               MEMLIB="Not in use for application jobs"
+               MEMNAME="PaypalFinancial_DE_ONL"
+               MULTY_AGENT="N"
+               NODEID="nyapcntrlm02"
+               NOV="1"
+               OCT="1"
+               OWNER="PaypalERP_DE_ONL"
+               RETRO="0"
+               SEP="1"
+               SHIFT="IGNOREJOB"
+               SHIFTNUM="+00"
+               SYSDB="0"
+               TASKTYPE="Job"
+               TIMEFROM="1006"
+               TIMETO="&gt;"
+               USE_INSTREAM_JCL="0"
+               WEEKDAYS="ALL"
+            >
+               <QUANTITATIVE NAME="All_Batch" QUANT="1" />
+               <OUTCOND NAME="PaypalFinancial_DE_ONL-ENDED-OK" ODATE="ODAT" SIGN="ADD" />
+               <AUTOEDIT EXP="%%YDATE=%%$CALCDATE %%$ODATE -1" />
+               <QUANTITATIVE NAME="DE_Web" QUANT="1" />
+               <AUTOEDIT EXP="%%FTP-ACCOUNT=PaypalERP_DE_ONL" />
+               <AUTOEDIT EXP="%%FTP-LOSTYPE=Windows" />
+               <AUTOEDIT EXP="%%FTP-LUSER=production\prodCntrlM_agent" />
+               <AUTOEDIT EXP="%%FTP-ROSTYPE=Windows" />
+               <AUTOEDIT EXP="%%FTP-RUSER=sftpsc_WWIEURDEONL" />
+               <AUTOEDIT EXP="%%FTP-LPATH1=D:\FileStage\ERP\NACO\Paypal\DE\" />
+               <AUTOEDIT EXP="%%FTP-RPATH1=/ppreports/outgoing/\STL-%%YDATE..01.002.CSV" />
+               <AUTOEDIT EXP="%%FTP-PATH=Not in use for application jobs" />
+               <AUTOEDIT EXP="%%FTP-USE_DEF_NUMRETRIES=1" />
+               <AUTOEDIT EXP="%%FTP-RPF=1" />
+               <AUTOEDIT EXP="%%FTP-CLEAR_ALL=1" />
+               <AUTOEDIT EXP="%%FTP-CONNTYPE2=SFTP" />
+               <AUTOEDIT EXP="%%FTP-CONNTYPE1=LOCAL" />
+               <AUTOEDIT EXP="%%FTP-LHOST=NYAPCNTRLM02" />
+               <AUTOEDIT EXP="%%FTP-RHOST=reports.paypal.com" />
+               <AUTOEDIT EXP="%%FTP-LPASSIVE=0" />
+               <AUTOEDIT EXP="%%FTP-RPASSIVE=0" />
+               <AUTOEDIT EXP="%%FTP-UPLOAD1=0" />
+               <AUTOEDIT EXP="%%FTP-UPLOAD2=1" />
+               <AUTOEDIT EXP="%%FTP-UPLOAD3=1" />
+               <AUTOEDIT EXP="%%FTP-UPLOAD4=1" />
+               <AUTOEDIT EXP="%%FTP-UPLOAD5=1" />
+               <AUTOEDIT EXP="%%FTP-TRANSFER_NUM=1" />
+               <AUTOEDIT EXP="%%FTP-TYPE1=A" />
+               <AUTOEDIT EXP="%%FTP-TYPE2=I" />
+               <AUTOEDIT EXP="%%FTP-TYPE3=I" />
+               <AUTOEDIT EXP="%%FTP-TYPE4=I" />
+               <AUTOEDIT EXP="%%FTP-TYPE5=I" />
+               <AUTOEDIT EXP="%%FTP-MINSIZE1=0" />
+               <AUTOEDIT EXP="%%FTP-MINSIZE2=0" />
+               <AUTOEDIT EXP="%%FTP-MINSIZE3=0" />
+               <AUTOEDIT EXP="%%FTP-MINSIZE4=0" />
+               <AUTOEDIT EXP="%%FTP-MINSIZE5=0" />
+               <AUTOEDIT EXP="%%FTP-TIMELIMIT1=0" />
+               <AUTOEDIT EXP="%%FTP-TIMELIMIT2=0" />
+               <AUTOEDIT EXP="%%FTP-TIMELIMIT3=0" />
+               <AUTOEDIT EXP="%%FTP-TIMELIMIT4=0" />
+               <AUTOEDIT EXP="%%FTP-TIMELIMIT5=0" />
+               <AUTOEDIT EXP="%%FTP-IF_EXIST1=0" />
+               <AUTOEDIT EXP="%%FTP-IF_EXIST2=0" />
+               <AUTOEDIT EXP="%%FTP-IF_EXIST3=0" />
+               <AUTOEDIT EXP="%%FTP-IF_EXIST4=0" />
+               <AUTOEDIT EXP="%%FTP-IF_EXIST5=0" />
+               <AUTOEDIT EXP="%%FTP-SRCOPT1=0" />
+               <AUTOEDIT EXP="%%FTP-SRCOPT2=0" />
+               <AUTOEDIT EXP="%%FTP-SRCOPT3=0" />
+               <AUTOEDIT EXP="%%FTP-SRCOPT4=0" />
+               <AUTOEDIT EXP="%%FTP-SRCOPT5=0" />
+               <AUTOEDIT EXP="%%FTP-DSTOPT1=0" />
+               <AUTOEDIT EXP="%%FTP-DSTOPT2=0" />
+               <AUTOEDIT EXP="%%FTP-DSTOPT3=0" />
+               <AUTOEDIT EXP="%%FTP-DSTOPT4=0" />
+               <AUTOEDIT EXP="%%FTP-DSTOPT5=0" />
+               <AUTOEDIT EXP="%%FTP-ABSTIME1=0" />
+               <AUTOEDIT EXP="%%FTP-ABSTIME2=0" />
+               <AUTOEDIT EXP="%%FTP-ABSTIME3=0" />
+               <AUTOEDIT EXP="%%FTP-ABSTIME4=0" />
+               <AUTOEDIT EXP="%%FTP-ABSTIME5=0" />
+               <AUTOEDIT EXP="%%FTP-CONT_EXE_NOTOK=0" />
+               <AUTOEDIT EXP="%%FTP-TRIM1=1" />
+               <AUTOEDIT EXP="%%FTP-TRIM2=1" />
+               <AUTOEDIT EXP="%%FTP-TRIM3=1" />
+               <AUTOEDIT EXP="%%FTP-TRIM4=1" />
+               <AUTOEDIT EXP="%%FTP-TRIM5=1" />
+               <ON CODE="NOTOK" STMT="*" >
+                <DO ACTION="RERUN" />
+                <DOMAIL DEST="peter@pan.com" MESSAGE="0023CONTROL-M: %%DATACENTER0021APPLICATION: %%APPLIC0019GROUP:  %%APPLGROUP0022Job: %%JOBNAME  failed0016Server: %%NODEID00000033Error level returned: %%COMPSTAT.00000028CONTROL-M Log File attached." SUBJECT="Control-M Job &quot;Paypal PaypalFinancial_DE_ONL&quot; Failed" URGENCY="R"/>
+               </ON>
+               <ON CODE="*Transfer*ended*abnormally*file*size*" STMT="*" >
+                <DO ACTION="OK" />
+               </ON>
+        </JOB>
+        <!-- DATABASE -->
+         <JOB 
+
+           APPLICATION="AU" 
+
+           APPL_FORM="Databases" 
+
+           APPL_TYPE="DATABASE" 
+
+           APPL_VER="ANY" 
+
+           APR="1" 
+
+           AUG="1" 
+
+           AUTHOR="peter.pan" 
+
+           AUTOARCH="0" 
+
+           CM_VER="7.0.00" 
+
+           CONFIRM="1" 
+
+           CREATION_DATE="20130122" 
+
+           CREATION_TIME="071739" 
+
+           CREATION_USER="peter.pan" 
+
+           CRITICAL="0" 
+
+           CYCLIC="0" 
+
+           CYCLIC_TYPE="IntervalSequence" 
+
+           DAYS_AND_OR="OR" 
+
+           DEC="1" 
+
+           FEB="1" 
+
+           GROUP="ContentRefresh" 
+
+           IND_CYCLIC="START" 
+
+           INTERVAL="00004H" 
+
+           JAN="1" 
+
+           JOBNAME="databaseScriptSQL" 
+
+           JUL="1" 
+
+           JUN="1" 
+
+           MAR="1" 
+
+           MAXDAYS="0" 
+
+           MAXRERUN="0" 
+
+           MAXRUNS="0" 
+
+           MAXWAIT="0" 
+
+           MAY="1" 
+
+           MEMLIB="DO NOT USE FOR DB JOBS" 
+
+           MEMNAME="AU-PRODJ-Emergency-CMSContentRefreshGroup1-SQL" 
+
+           MULTY_AGENT="N" 
+
+           NODEID="NYAPCTRLMA02" 
+
+           NOV="1" 
+
+           OCT="1" 
+
+           OWNER="AU_PRODJ_APPJ_MAIN" 
+
+           PARENT_TABLE="AU" 
+
+           RETRO="0" 
+
+           RULE_BASED_CALENDAR_RELATIONSHIP="OR" 
+
+           SEP="1" 
+
+           SHIFT="IGNOREJOB" 
+
+           SHIFTNUM="+00" 
+
+           SYSDB="0" 
+
+           TASKTYPE="Job" 
+
+           TIMEFROM="0001" 
+
+           TIMETO=">" 
+
+           USE_INSTREAM_JCL="N" 
+
+           WEEKDAYS="ALL">
+
+            <INCOND AND_OR="AND" NAME="AU-PRODJ-Emergency-GCMSContentRefreshGroup2-SQL-ENDED" ODATE="ODAT"/>
+
+            <QUANTITATIVE NAME="ALL" QUANT="1"/>
+
+            <QUANTITATIVE NAME="AU_PRODJ_ContentRefresh" QUANT="1"/>
+
+            <QUANTITATIVE NAME="AU_PRODJ" QUANT="1"/>
+
+            <QUANTITATIVE NAME="ALL_PRODJ" QUANT="1"/>
+
+            <OUTCOND NAME="AU-PRODJ-Emergency-GCMSContentRefreshGroup2-SQL-ENDED" ODATE="ODAT" SIGN="DEL"/>
+
+            <AUTOEDIT2 NAME="%%DB-ACCOUNT" VALUE="AU_PRODJ_APPJ_MAIN"/>
+
+            <AUTOEDIT2 NAME="%%DB-DB_TYPE" VALUE="Oracle"/>
+
+            <AUTOEDIT2 NAME="%%DB-DB_VERSION" VALUE="10g"/>
+
+            <AUTOEDIT2 NAME="%%DB-STP_SCHEM" VALUE="*"/>
+
+            <AUTOEDIT2 NAME="%%DB-STP_PACKAGE" VALUE="*"/>
+
+            <AUTOEDIT2 NAME="%%DB-SCRPT_NAME" VALUE="D:\site_util\ControlM\PRODJ\AU\ww_com_ctrlm\WW_COM\SQL\WW_CMS_ContentRefresh_Prod.sql"/>
+
+            <AUTOEDIT2 NAME="%%DB-EXEC_TYPE" VALUE="SQL Script"/>
+
+            <AUTOEDIT2 NAME="%%DB-SSIS_PACKAGE_SOURCE" VALUE="SQL Server"/>
+
+            <AUTOEDIT2 NAME="%%DB-SCRPT_PARMS-P001-VARIABLE" VALUE="P_SITE_ID"/>
+
+            <AUTOEDIT2 NAME="%%DB-SCRPT_PARMS-P001-VALUE" VALUE="3"/>
+
+            <AUTOEDIT2 NAME="%%DB-APPEND_LOG" VALUE="Y"/>
+
+            <AUTOEDIT2 NAME="%%DB-APPEND_OUTPUT" VALUE="Y"/>
+
+            <AUTOEDIT2 NAME="%%DB-OUTPUT_FORMAT" VALUE="Text"/>
+
+            <ON CODE="*ERROR*PKG_WWCONTENT_REFRESH*" STMT="*">
+
+              <DO ACTION="NOTOK"/>
+
+            </ON>
+
+            <ON CODE="NOTOK" STMT="*">
+
+              <DOMAIL 
+
+               ATTACH_SYSOUT="Yes" 
+
+               CC_DEST="peter@pan.com" 
+
+               DEST="peter@pan.com" 
+
+               MESSAGE="0023CONTROL-M: %%DATACENTER0021APPLICATION: %%APPLIC0019GROUP:  %%APPLGROUP0022Job: %%JOBNAME  failed0016Server: %%NODEID00000033Error level returned: %%COMPSTAT.00000028CONTROL-M Log File attached." 
+
+               SUBJECT="Control-M Job %%JOBNAME Failed with exit code %%COMPSTAT" 
+
+               URGENCY="R"/>
+
+            </ON>
+
+        </JOB>
+        <!-- FileWatch -->
+
+          <JOB 
+
+           APPLICATION="AU" 
+
+           APPL_FORM="File Watcher" 
+
+           APPL_TYPE="FileWatch" 
+
+           APPL_VER="W2K/XP" 
+
+           APR="1" 
+
+           AUG="1" 
+
+           AUTHOR="NRaymond" 
+
+           AUTOARCH="0" 
+
+           CHANGE_DATE="20150320" 
+
+           CHANGE_TIME="123556" 
+
+           CHANGE_USERID="peter.pan" 
+
+           CM_VER="610" 
+
+           CONFIRM="0" 
+
+           CREATION_DATE="20121004" 
+
+           CREATION_TIME="002639" 
+
+           CREATION_USER="nraymond" 
+
+           CRITICAL="0" 
+
+           CYCLIC="0" 
+
+           CYCLIC_TYPE="Interval" 
+
+           DAYS="ALL" 
+
+           DAYS_AND_OR="OR" 
+
+           DEC="1" 
+
+           FEB="1" 
+
+           GROUP="RecurringBilling" 
+
+           INTERVAL="00001M" 
+
+           JAN="1" 
+
+           JOBNAME="fileWatch" 
+
+           JUL="1" 
+
+           JUN="1" 
+
+           MAR="1" 
+
+           MAXDAYS="0" 
+
+           MAXRERUN="0" 
+
+           MAXRUNS="0" 
+
+           MAXWAIT="0" 
+
+           MAY="1" 
+
+           MEMLIB="D:\site_util\ControlM\PRODJ\AU\recbill\bin\ReportLogs\en-au" 
+
+           MEMNAME="AU-PRODJ-RecurringBilling-FileWatch" 
+
+           MULTY_AGENT="N" 
+
+           NODEID="NYAPAPSTAGE" 
+
+           NOV="1" 
+
+           OCT="1" 
+
+           OWNER="PRODUCTION\prodCntrlM_Dotcom" 
+
+           PARENT_TABLE="AU" 
+
+           RETRO="0" 
+
+           RULE_BASED_CALENDAR_RELATIONSHIP="OR" 
+
+           SEP="1" 
+
+           SHIFT="IGNOREJOB" 
+
+           SHIFTNUM="+00" 
+
+           SYSDB="0" 
+
+           TASKTYPE="Job" 
+
+           TIMEFROM="1200" 
+
+           TIMETO=">" 
+
+           USE_INSTREAM_JCL="N" 
+
+           WEEKDAYS="ALL">
+
+            <INCOND AND_OR="AND" NAME="AU_AU-PRODJ-RecurringBilling-EXE-TO-AU_AU-PRODJ-RecurringBilling-FileWatch" ODATE="ODAT"/>
+
+            <QUANTITATIVE NAME="ALL" QUANT="1"/>
+
+            <QUANTITATIVE NAME="AU_PRODJ_RecurringBilling" QUANT="1"/>
+
+            <QUANTITATIVE NAME="AU_PRODJ" QUANT="1"/>
+
+            <QUANTITATIVE NAME="ALL_PRODJ" QUANT="1"/>
+
+            <OUTCOND NAME="AU_AU-PRODJ-RecurringBilling-EXE-TO-AU_AU-PRODJ-RecurringBilling-FileWatch" ODATE="ODAT" SIGN="DEL"/>
+
+            <OUTCOND NAME="AU_AU-PRODJ-RecurringBilling-FileWatch-TO-AU_AU-PRODJ-RecurringBilling-Processing.bat" ODATE="ODAT" SIGN="ADD"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-FILE_PATH" VALUE="D:\site_util\ControlM\PRODJ\AU\recbill\bin\ReportLogs\en-au\RB_en-au_*.txt"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-MIN_DET_SIZE" VALUE="0"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-INT_FILE_SEARCHES" VALUE="300"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-INT_FILESIZE_COMPARISON" VALUE="10"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-NUM_OF_ITERATIONS" VALUE="3"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-TIME_LIMIT" VALUE="0"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-START_TIME" VALUE="NOW"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-STOP_TIME" VALUE="2359"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-MIN_AGE" VALUE="NO_MIN_AGE"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-MAX_AGE" VALUE="NO_MAX_AGE"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-PATH" VALUE="D:\site_util\ControlM\PRODJ\AU\recbill\bin\ReportLogs\en-au"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-MODE" VALUE="CREATE"/>
+
+            <AUTOEDIT2 NAME="%%FileWatch-FILESIZE_WILDCARD" VALUE="N"/>
+
+            <ON CODE="NOTOK" STMT="*">
+
+              <DOMAIL 
+
+               ATTACH_SYSOUT="Yes" 
+
+               CC_DEST="peter@pan.com" 
+
+               DEST="peter@pan.com" 
+
+               MESSAGE="0023CONTROL-M: %%DATACENTER0021APPLICATION: %%APPLIC0019GROUP:  %%APPLGROUP0022Job: %%JOBNAME  failed0016Server: %%NODEID00000033Error level returned: %%COMPSTAT.00000028CONTROL-M Log File attached." 
+
+               SUBJECT="Control-M Job %%JOBNAME Failed with exit code %%COMPSTAT" 
+
+               URGENCY="R"/>
+
+            </ON>
+
+          </JOB>
+
+    </TABLE>
+</DEFTABLE>
