@@ -3,18 +3,14 @@
 This converter uses Control-M 6.3 or 7 export files to generate both resources and project RUNDECK import files, in order to automate the migration process from Control-M to RUNDECK
 
 
-## Generate RUNDECK resources file
+## Generate RUNDECK resources and project files
 
-```gradle resources -Pinput="./example/job_that_runs_last_monday_of_every_month.xml,./example/job_that_runs_last_thursday_of_every_month.xml"```
+CAUTION: the script will erase the _output_ folder before execution if it exists
 
-will produce a folder "YYYY_MM_dd_HH_mm" with a resources.xml file
+```sh run.sh ./example/job_that_runs_last_monday_of_every_month.xml,./example/job_that_runs_last_thursday_of_every_month.xml```
 
-_several input files can be processed separated by comma_
-
-## Generate RUNDECK project file
-
-```gradle jobs -Pinput="./example/job_that_runs_last_monday_of_every_month.xml,./example/job_that_runs_last_thursday_of_every_month.xml"```
+will produce a folder "output/resources" with a resources.xml file and a folder "output/jobs" with the RUNDECK import xml files
 
 _several input files can be processed separated by comma_
 
-will produce a folder "YYYY_MM_dd_HH_mm" with the RUNDECK import xml files
+NOTE: all jobs will be generated with execution disabled for safety, you need to enable them after revision
