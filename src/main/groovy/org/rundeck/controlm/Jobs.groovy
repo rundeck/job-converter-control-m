@@ -42,14 +42,14 @@ class Jobs extends Base {
             (new File(outputDir, file.name)) << XmlUtil.serialize(buildJobsDocument(ctrlms, properties))
 
             // print by outputGroup
-            final Map<String, List<ControlMJob>> ctrlmsByOutputGroup = ctrlms.groupBy { job -> outputFileGroups.get(job.rawGroup, "GROUPLESS") }
+            //final Map<String, List<ControlMJob>> ctrlmsByOutputGroup = ctrlms.groupBy { job -> outputFileGroups.get(job.rawGroup, "GROUPLESS") }
 
-            ctrlmsByOutputGroup.each { String outputGroup, List<ControlMJob> jobsInGroup ->
+            /*ctrlmsByOutputGroup.each { String outputGroup, List<ControlMJob> jobsInGroup ->
                 final String fileName = "${file.name.replaceAll(".xml", "")}_${outputGroup}.xml"
                 final ControlMJobs jobs = new ControlMJobs(jobsInGroup)
 
                 (new File(outputDir, fileName)) << XmlUtil.serialize(buildJobsDocument(jobs, properties))
-            }
+            }*/
         }
     }
 
