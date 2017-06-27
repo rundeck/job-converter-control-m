@@ -27,7 +27,7 @@ class Jobs extends Base {
             printlnAndExit "no ControlMJobs after parsing", 0
         }
 
-        final File outputDir = getOutputDir();
+        final File outputDir = new File("output/jobs");//getOutputDir();
         final Map<String, String> outputFileGroups = getOutputFileGroups(properties)
 
 

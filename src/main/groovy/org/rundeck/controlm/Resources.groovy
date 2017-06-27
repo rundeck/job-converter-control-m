@@ -18,7 +18,7 @@ class Resources extends Base {
             printlnAndExit "no controlm jobs were available, after parsing every file"
         }
 
-        final File outputDir = getOutputDir();
+        final File outputDir = new File("output/resources");//getOutputDir();
         if (!outputDir.exists() && !outputDir.mkdirs()) {
             printlnAndExit "couldn´t create directory: ${outputDir}"
         }
