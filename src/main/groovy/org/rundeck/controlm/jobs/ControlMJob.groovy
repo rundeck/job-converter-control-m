@@ -74,8 +74,8 @@ class ControlMJob implements SharedFunctions {
         final String country = getCountry()
         final String application = ctrlm['@APPLICATION'].text()
         final String group = ctrlm['@GROUP'].text();
-
-        return "${country}/${application}/${group}"
+        return "${application}"
+        //return "${country}/${application}/${group}" TODO: think of a better grouping translation
     }
 
     String getRawGroup() {
