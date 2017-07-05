@@ -4,7 +4,7 @@
     <TABLE DATACENTER="PROD" TABLE_NAME="PRODJ-AU" TABLE_USERDAILY="SYSTEM" USED_BY_CODE="0">
         <JOB
 
-                APPLICATION="reports_ctrlm"
+                APPLICATION="COMMANDS"
 
                 APR="1"
 
@@ -172,7 +172,7 @@
         </JOB>
         <JOB
 
-                APPLICATION="ftp"
+                APPLICATION="COMMANDS"
 
                 APR="1"
 
@@ -333,7 +333,7 @@
         </JOB>
         <!-- File Transfer -->
         <JOB
-               APPLICATION="BackOffice"
+               APPLICATION="FILES"
                APPL_FORM="AFT"
                APPL_TYPE="FILE_TRANS"
                APPL_VER="6.1.01"
@@ -464,7 +464,7 @@
         <!-- DATABASE -->
          <JOB 
 
-           APPLICATION="AU" 
+           APPLICATION="DATABASE" 
 
            APPL_FORM="Databases" 
 
@@ -633,7 +633,7 @@
 
           <JOB 
 
-           APPLICATION="AU" 
+           APPLICATION="FILES" 
 
            APPL_FORM="File Watcher" 
 
